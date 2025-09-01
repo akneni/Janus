@@ -69,12 +69,20 @@ EntryCommitted(md) ==
 (* Message "types" as record universes (depend only on constants)          *)
 (***************************************************************************)
 MessageTypes == {
-  "AppendEntries RF1", "AppendEntries RF2",
-  "SwitchToRF1", "SwitchToRF1Leader",
-  "SwitchToRF2 P1", "SwitchToRF2 P2",
-  "AppendEntries RF1 Resp", "AppendEntries RF2 Resp",
-  "SwitchToRF1 Resp", "SwitchToRF1Leader Resp",
-  "SwitchToRF2 P1 Resp"
+  "AppendEntries RF1", 
+  "AppendEntries RF2",
+  "SwitchToRF1", 
+  "SwitchToRF1Leader",
+  "SwitchToRF2 P1", 
+  "SwitchToRF2 P2",
+  "InitWorkload",
+  
+  "AppendEntries RF1 Resp", 
+  "AppendEntries RF2 Resp",
+  "SwitchToRF1 Resp", 
+  "SwitchToRF1Leader Resp",
+  "SwitchToRF2 P1 Resp",
+  "InitWorkload Resp"
 }
 
 AeRf1 == [
@@ -180,10 +188,30 @@ StRf2P2 == [
   RF          : 1..2
 ]
 
+InitWorkload == [
+  source      : NodeSet,
+  destination : NodeSet,
+  rpc_type    : {"InitWorkload"},
+  commit_index: LogEntryMd,
+  term        : 0..MaxTerm,
+  RF          : 1..2
+]
+
+InitWorkloadResp == [
+  source      : NodeSet,
+  destination : NodeSet,
+  rpc_type    : {"InitWorkload Resp"},
+  commit_index: LogEntryMd,
+  term        : 0..MaxTerm,
+  RF          : 1..2,
+  ok          : {TRUE, FALSE}
+]
+
 AllMsgs ==
   AeRf1 \cup AeRf1Resp \cup AeRf2 \cup AeRf2Resp \cup
   StRf1 \cup StRf1Resp \cup StRf1L \cup StRf1LResp \cup
-  StRf2P1 \cup StRf2P1Resp \cup StRf2P2
+  StRf2P1 \cup StRf2P1Resp \cup StRf2P2 \cup 
+  InitWorkload \cup InitWorkloadResp
 
 (***************************************************************************)
 (* Invariants / Properties                                                 *)
@@ -282,6 +310,127 @@ RemoveAt(seq, i) ==
 (***************************************************************************)
 (* Leader/Follower/Elector Actions                                         *)
 (***************************************************************************)
+FollowerSendInitWkl(n) ==
+  /\ n \in DataNodes
+  /\ Role[n] = "follower"
+  /\ Term[n] = 0
+  /\ LET msg == [
+         source       |-> n,
+         destination  |-> OtherDataNode(n),
+         rpc_type     |-> "InitWorkload",
+         commit_index |-> CommittedIdx[n],
+         term         |-> Term[n],
+         RF           |-> ReplicationFactor[n]
+     ]
+     IN
+       /\ Messages'      = Append(Messages, msg)
+       /\ ActivatedNode' = n
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Term, Role, Nodes,
+                       ReplicationFactor, NumFailures, DmlLog, CurrentLeader >>
+
+FollowerAckInitWkl(f) ==
+  /\ f \in DataNodes
+  /\ \E i \in 1..Len(Messages) :
+       LET m == Messages[i] IN
+         /\ m.rpc_type = "InitWorkload"
+         /\ m.destination = f
+         /\ m.term >= Term[f]
+  /\ LET m == Messages[
+         CHOOSE j \in 1..Len(Messages) :
+           /\ Messages[j].rpc_type = "InitWorkload"
+           /\ Messages[j].destination = f
+           /\ Messages[j].term >= Term[f]
+       ]
+       \* Note, the rule in the spec is "a node only responds with OK if the other node has a higher node ID"
+       \* Since TLA+ doesn't have string comparisons, I'll just hard code this for now
+       ok == (f = "d1") /\ (m.source = "d2")
+       newTermF ==
+         IF ok THEN m.term + 1 ELSE Term[f]
+       newLeaderF ==
+         IF ok THEN m.source ELSE CurrentLeader[f]
+       resp == [
+         source       |-> f,
+         destination  |-> m.source,
+         rpc_type     |-> "InitWorkload Resp",
+         commit_index |-> m.commit_index,
+         term         |-> newTermF,
+         RF           |-> m.RF,
+         ok           |-> ok
+       ]
+       idx == CHOOSE k \in 1..Len(Messages) : Messages[k] = m
+     IN
+       /\ Term'          = [Term EXCEPT ![f] = newTermF]
+       /\ CurrentLeader' = [CurrentLeader EXCEPT ![f] = newLeaderF]
+       /\ Messages'      = Append(RemoveAt(Messages, idx), resp)
+       /\ ActivatedNode' = f
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Role, Nodes,
+                       ReplicationFactor, NumFailures, DmlLog >>
+
+CandidateProcessAckInitWkl_OK(n) ==
+  /\ n \in DataNodes
+  /\ Role[n] = "candidate"
+  /\ \E i \in 1..Len(Messages) :
+       LET r == Messages[i] IN
+         /\ r.rpc_type = "InitWorkload Resp"
+         /\ r.destination = n
+         /\ r.source = OtherDataNode(n)
+         /\ r.ok = TRUE
+         /\ r.term > Term[n]
+  /\ LET r == Messages[
+         CHOOSE j \in 1..Len(Messages) :
+           /\ Messages[j].rpc_type = "InitWorkload Resp"
+           /\ Messages[j].destination = n
+           /\ Messages[j].source = OtherDataNode(n)
+           /\ Messages[j].ok = TRUE
+           /\ Messages[j].term > Term[n]
+       ]
+       newTermN == r.term
+       newRFN   == r.RF
+       idx      == CHOOSE k \in 1..Len(Messages) : Messages[k] = r
+     IN
+       /\ Term'              = [Term EXCEPT ![n] = newTermN]
+       /\ ReplicationFactor' = [ReplicationFactor EXCEPT ![n] = newRFN]
+       /\ Role'              = [Role EXCEPT ![n] = "leader"]
+       /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = n]
+       /\ Messages'          = RemoveAt(Messages, idx)
+       /\ ActivatedNode'     = n
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+
+CandidateProcessAckInitWkl_NACK(n) ==
+  /\ n \in DataNodes
+  /\ Role[n] = "candidate"
+  /\ \E i \in 1..Len(Messages) :
+       LET r == Messages[i] IN
+         /\ r.rpc_type = "InitWorkload Resp"
+         /\ r.destination = n
+         /\ r.source = OtherDataNode(n)
+         /\ r.ok = FALSE
+         /\ r.term >= Term[n]
+  /\ LET r == Messages[
+         CHOOSE j \in 1..Len(Messages) :
+           /\ Messages[j].rpc_type = "InitWorkload Resp"
+           /\ Messages[j].destination = n
+           /\ Messages[j].source = OtherDataNode(n)
+           /\ Messages[j].ok = FALSE
+           /\ Messages[j].term >= Term[n]
+       ]
+       higher    == r.term > Term[n]
+       newTermN  == IF higher THEN r.term ELSE Term[n]
+       newRFN    == IF higher THEN r.RF   ELSE ReplicationFactor[n]
+       newCurLdN == IF higher THEN "unknown" ELSE CurrentLeader[n]
+       idx       == CHOOSE k \in 1..Len(Messages) : Messages[k] = r
+     IN
+       /\ Term'              = [Term EXCEPT ![n] = newTermN]
+       /\ ReplicationFactor' = [ReplicationFactor EXCEPT ![n] = newRFN]
+       /\ Role'              = [Role EXCEPT ![n] = "follower"]
+       /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = newCurLdN]
+       /\ Messages'          = RemoveAt(Messages, idx)
+       /\ ActivatedNode'     = n
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+
+CandidateProcessAckInitWkl(n) ==
+    CandidateProcessAckInitWkl_OK(n) \/ CandidateProcessAckInitWkl_NACK(n)
+
 LeaderSendAE_RF1(n, d) ==
   /\ n \in DataNodes
   /\ Role[n] = "leader"
@@ -648,9 +797,13 @@ LeaderProcessSwitchToRF1_NACK(n) ==
        /\ ActivatedNode' = n
        /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
 
+LeaderProcessSwitchToRF1(n) == 
+    LeaderProcessSwitchToRF1_OK(n) \/ LeaderProcessSwitchToRF1_NACK(n)
+
 FollowerSendSwitchToRF1Leader(n) ==
   /\ n \in DataNodes
   /\ Role[n] \in {"follower"}
+  /\ Term[n] > 0
   /\ LET msg == [
          source        |-> n,
          destination   |-> CHOOSE e \in ElectorNodes : TRUE,
@@ -932,7 +1085,6 @@ DupMsg ==
                        ReplicationFactor, NumFailures, CurrentLeader, DmlLog >>
 
 HardReset ==
-  /\ FALSE
   /\ NumFailures = 0
   /\ \E n \in Nodes :
        IF n \in DataNodes THEN
@@ -967,23 +1119,31 @@ Vars == << LoggedIdx, CommittedIdx, Term, Role, Nodes,
            ReplicationFactor, NumFailures, CurrentLeader, DmlLog, Messages >>
 
 Next ==
+    \/ \E n \in DataNodes              : FollowerSendInitWkl(n)
+    \/ \E n \in DataNodes              : FollowerAckInitWkl(n)
+    \/ \E n \in DataNodes              : CandidateProcessAckInitWkl(n)
+
     \/ \E n \in DataNodes, d \in {0,1} : LeaderSendAE_RF1(n,d)
     \/ \E e \in ElectorNodes           : ElectorAckAE_RF1(e)
     \/ \E n \in DataNodes              : LeaderProcessAckAE_RF1(n)
+    
     \/ \E n \in DataNodes, d \in {0,1} : LeaderSendAE_RF2(n,d)
     \/ \E f \in DataNodes              : FollowerAckAE_RF2(f)
     \/ \E n \in DataNodes              : LeaderProcessAckAE_RF2(n)
+    
     \/ \E n \in DataNodes              : LeaderSendSwitchToRF1(n)
     \/ \E e \in ElectorNodes           : ElectorAckSwitchToRF1(e)
-    \/ \E n \in DataNodes              : LeaderProcessSwitchToRF1_OK(n)
-    \/ \E n \in DataNodes              : LeaderProcessSwitchToRF1_NACK(n)
+    \/ \E n \in DataNodes              : LeaderProcessSwitchToRF1(n)
+    
     \/ \E n \in DataNodes              : FollowerSendSwitchToRF1Leader(n)
     \/ \E e \in ElectorNodes           : ElectorAckSwitchToRF1Leader(e)
     \/ \E n \in DataNodes              : CandidateProcessSwitchToRF1Leader(n)
+    
     \/ \E n \in DataNodes, d \in {0,1} : LeaderSendSwitchToRF2_P1(n,d)
     \/ \E f \in DataNodes              : FollowerAckSwitchToRF2_P1(f)
     \/ \E n \in DataNodes              : LeaderProcessAckSwitchToRF2_P1(n)
     \/ \E e \in ElectorNodes           : ElectorAckSwitchToRF2_P2(e)
+    
     \/ DropMsg
     \/ DupMsg
     \/ HardReset
@@ -1003,7 +1163,7 @@ AllProperties == [] [LeaderAppendOnly]_Vars
 
 =============================================================================
 \* Modification History
-\* Last modified Mon Sep 01 14:55:43 PDT 2025 by aknen
+\* Last modified Mon Sep 01 15:42:47 PDT 2025 by aknen
 \* Created Thu Aug 28 19:55:21 PDT 2025 by aknen
 
 

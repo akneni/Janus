@@ -69,7 +69,7 @@ function toggle(btn) {
 <body>
 <header>
   <h1>TLC Trace Dump</h1>
-  <div class="meta">8 states</div>
+  <div class="meta">3 states</div>
 </header>
 <main>
   
@@ -90,16 +90,16 @@ function toggle(btn) {
 <tr>
                         <td class="vk">CommittedIdx</td>
                         <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
+  d1 |-&gt; [index |-&gt; 0, term |-&gt; 0],
+  d2 |-&gt; [index |-&gt; 0, term |-&gt; 0]
 ]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">CurrentLeader</td>
                         <td class="vv"><pre>[
-  e1 |-&gt; &quot;d1&quot;,
   d1 |-&gt; &quot;d1&quot;,
-  d2 |-&gt; &quot;d1&quot;
+  d2 |-&gt; &quot;d1&quot;,
+  e1 |-&gt; &quot;d1&quot;
 ]</pre></td>
                     </tr>
 <tr>
@@ -109,8 +109,8 @@ function toggle(btn) {
 <tr>
                         <td class="vk">LoggedIdx</td>
                         <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
+  d1 |-&gt; [index |-&gt; 0, term |-&gt; 0],
+  d2 |-&gt; [index |-&gt; 0, term |-&gt; 0]
 ]</pre></td>
                     </tr>
 <tr>
@@ -119,7 +119,7 @@ function toggle(btn) {
                     </tr>
 <tr>
                         <td class="vk">Nodes</td>
-                        <td class="vv"><pre>{&quot;e1&quot;, &quot;d1&quot;, &quot;d2&quot;}</pre></td>
+                        <td class="vv"><pre>{&quot;d1&quot;, &quot;d2&quot;, &quot;e1&quot;}</pre></td>
                     </tr>
 <tr>
                         <td class="vk">NumFailures</td>
@@ -127,19 +127,23 @@ function toggle(btn) {
                     </tr>
 <tr>
                         <td class="vk">ReplicationFactor</td>
-                        <td class="vv"><pre>[e1 |-&gt; 2, d1 |-&gt; 2, d2 |-&gt; 2]</pre></td>
+                        <td class="vv"><pre>[d1 |-&gt; 2, d2 |-&gt; 2, e1 |-&gt; 2]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Role</td>
                         <td class="vv"><pre>[
-  e1 |-&gt; &quot;elector&quot;,
   d1 |-&gt; &quot;follower&quot;,
-  d2 |-&gt; &quot;follower&quot;
+  d2 |-&gt; &quot;follower&quot;,
+  e1 |-&gt; &quot;elector&quot;
 ]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Term</td>
-                        <td class="vv"><pre>[e1 |-&gt; 0, d1 |-&gt; 0, d2 |-&gt; 0]</pre></td>
+                        <td class="vv"><pre>[
+  d1 |-&gt; 0,
+  d2 |-&gt; 0,
+  e1 |-&gt; 0]
+]</pre></td>
                     </tr>
                     </tbody>
                 </table>
@@ -148,7 +152,7 @@ function toggle(btn) {
         <section class="state">
             <button class="hdr" onclick="toggle(this)" aria-expanded="false">
                 <span class="pill">#2</span>
-                <span class="title">FollowerSendSwitchToRF1Leader</span>
+                <span class="title">FollowerSendInitWkl</span>
                 <span class="chev">▸</span>
             </button>
             <div class="body" hidden>
@@ -162,16 +166,16 @@ function toggle(btn) {
 <tr>
                         <td class="vk">CommittedIdx</td>
                         <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
+  d1 |-&gt; [index |-&gt; 0, term |-&gt; 0],
+  d2 |-&gt; [index |-&gt; 0, term |-&gt; 0]
 ]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">CurrentLeader</td>
                         <td class="vv"><pre>[
-  e1 |-&gt; &quot;d1&quot;,
   d1 |-&gt; &quot;d1&quot;,
-  d2 |-&gt; &quot;d1&quot;
+  d2 |-&gt; &quot;d1&quot;,
+  e1 |-&gt; &quot;d1&quot;
 ]</pre></td>
                     </tr>
 <tr>
@@ -181,19 +185,19 @@ function toggle(btn) {
 <tr>
                         <td class="vk">LoggedIdx</td>
                         <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
+  d1 |-&gt; [index |-&gt; 0, term |-&gt; 0],
+  d2 |-&gt; [index |-&gt; 0, term |-&gt; 0]
 ]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Messages</td>
                         <td class="vv changed"><pre>&lt;&lt;
-  [term |-&gt; 0, source |-&gt; &quot;d1&quot;, destination |-&gt; &quot;e1&quot;, rpc_type |-&gt; &quot;SwitchToRF1Leader&quot;, commit_index |-&gt; [term |-&gt; 0, index |-&gt; 0], RF |-&gt; 2, log_index |-&gt; [term |-&gt; 0, index |-&gt; 0]]
+  [term |-&gt; 0, source |-&gt; &quot;d1&quot;, destination |-&gt; &quot;d2&quot;, rpc_type |-&gt; &quot;InitWorkload&quot;, commit_index |-&gt; [index |-&gt; 0, term |-&gt; 0], RF |-&gt; 2]
 &gt;&gt;</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Nodes</td>
-                        <td class="vv"><pre>{&quot;e1&quot;, &quot;d1&quot;, &quot;d2&quot;}</pre></td>
+                        <td class="vv"><pre>{&quot;d1&quot;, &quot;d2&quot;, &quot;e1&quot;}</pre></td>
                     </tr>
 <tr>
                         <td class="vk">NumFailures</td>
@@ -201,19 +205,23 @@ function toggle(btn) {
                     </tr>
 <tr>
                         <td class="vk">ReplicationFactor</td>
-                        <td class="vv"><pre>[e1 |-&gt; 2, d1 |-&gt; 2, d2 |-&gt; 2]</pre></td>
+                        <td class="vv"><pre>[d1 |-&gt; 2, d2 |-&gt; 2, e1 |-&gt; 2]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Role</td>
-                        <td class="vv changed"><pre>[
-  e1 |-&gt; &quot;elector&quot;,
-  d1 |-&gt; &quot;candidate&quot;,
-  d2 |-&gt; &quot;follower&quot;
+                        <td class="vv"><pre>[
+  d1 |-&gt; &quot;follower&quot;,
+  d2 |-&gt; &quot;follower&quot;,
+  e1 |-&gt; &quot;elector&quot;
 ]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Term</td>
-                        <td class="vv"><pre>[e1 |-&gt; 0, d1 |-&gt; 0, d2 |-&gt; 0]</pre></td>
+                        <td class="vv"><pre>[
+  d1 |-&gt; 0,
+  d2 |-&gt; 0,
+  e1 |-&gt; 0]
+]</pre></td>
                     </tr>
                     </tbody>
                 </table>
@@ -222,7 +230,7 @@ function toggle(btn) {
         <section class="state">
             <button class="hdr" onclick="toggle(this)" aria-expanded="false">
                 <span class="pill">#3</span>
-                <span class="title">FollowerSendSwitchToRF1Leader</span>
+                <span class="title">FollowerAckInitWkl</span>
                 <span class="chev">▸</span>
             </button>
             <div class="body" hidden>
@@ -236,16 +244,16 @@ function toggle(btn) {
 <tr>
                         <td class="vk">CommittedIdx</td>
                         <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
+  d1 |-&gt; [index |-&gt; 0, term |-&gt; 0],
+  d2 |-&gt; [index |-&gt; 0, term |-&gt; 0]
 ]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">CurrentLeader</td>
                         <td class="vv"><pre>[
-  e1 |-&gt; &quot;d1&quot;,
   d1 |-&gt; &quot;d1&quot;,
-  d2 |-&gt; &quot;d1&quot;
+  d2 |-&gt; &quot;d1&quot;,
+  e1 |-&gt; &quot;d1&quot;
 ]</pre></td>
                     </tr>
 <tr>
@@ -255,20 +263,19 @@ function toggle(btn) {
 <tr>
                         <td class="vk">LoggedIdx</td>
                         <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
+  d1 |-&gt; [index |-&gt; 0, term |-&gt; 0],
+  d2 |-&gt; [index |-&gt; 0, term |-&gt; 0]
 ]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Messages</td>
                         <td class="vv changed"><pre>&lt;&lt;
-  [term |-&gt; 0, source |-&gt; &quot;d1&quot;, destination |-&gt; &quot;e1&quot;, rpc_type |-&gt; &quot;SwitchToRF1Leader&quot;, commit_index |-&gt; [term |-&gt; 0, index |-&gt; 0], RF |-&gt; 2, log_index |-&gt; [term |-&gt; 0, index |-&gt; 0]],
-  [term |-&gt; 0, source |-&gt; &quot;d2&quot;, destination |-&gt; &quot;e1&quot;, rpc_type |-&gt; &quot;SwitchToRF1Leader&quot;, commit_index |-&gt; [term |-&gt; 0, index |-&gt; 0], RF |-&gt; 2, log_index |-&gt; [term |-&gt; 0, index |-&gt; 0]]
+  [term |-&gt; 0, source |-&gt; &quot;d2&quot;, destination |-&gt; &quot;d1&quot;, rpc_type |-&gt; &quot;InitWorkload Resp&quot;, commit_index |-&gt; [index |-&gt; 0, term |-&gt; 0], RF |-&gt; 2, ok |-&gt; FALSE]
 &gt;&gt;</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Nodes</td>
-                        <td class="vv"><pre>{&quot;e1&quot;, &quot;d1&quot;, &quot;d2&quot;}</pre></td>
+                        <td class="vv"><pre>{&quot;d1&quot;, &quot;d2&quot;, &quot;e1&quot;}</pre></td>
                     </tr>
 <tr>
                         <td class="vk">NumFailures</td>
@@ -276,388 +283,21 @@ function toggle(btn) {
                     </tr>
 <tr>
                         <td class="vk">ReplicationFactor</td>
-                        <td class="vv"><pre>[e1 |-&gt; 2, d1 |-&gt; 2, d2 |-&gt; 2]</pre></td>
+                        <td class="vv"><pre>[d1 |-&gt; 2, d2 |-&gt; 2, e1 |-&gt; 2]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Role</td>
-                        <td class="vv changed"><pre>[
-  e1 |-&gt; &quot;elector&quot;,
-  d1 |-&gt; &quot;candidate&quot;,
-  d2 |-&gt; &quot;candidate&quot;
+                        <td class="vv"><pre>[
+  d1 |-&gt; &quot;follower&quot;,
+  d2 |-&gt; &quot;follower&quot;,
+  e1 |-&gt; &quot;elector&quot;
 ]</pre></td>
                     </tr>
 <tr>
                         <td class="vk">Term</td>
-                        <td class="vv"><pre>[e1 |-&gt; 0, d1 |-&gt; 0, d2 |-&gt; 0]</pre></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section class="state">
-            <button class="hdr" onclick="toggle(this)" aria-expanded="false">
-                <span class="pill">#4</span>
-                <span class="title">ElectorAckSwitchToRF1Leader</span>
-                <span class="chev">▸</span>
-            </button>
-            <div class="body" hidden>
-                <table class="kv">
-                    <thead><tr><th>Variable</th><th>Value</th></tr></thead>
-                    <tbody>
-                        <tr>
-                        <td class="vk">ActivatedNode</td>
-                        <td class="vv changed"><pre>&quot;e1&quot;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CommittedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CurrentLeader</td>
-                        <td class="vv"><pre>[
-  e1 |-&gt; &quot;d1&quot;,
-  d1 |-&gt; &quot;d1&quot;,
-  d2 |-&gt; &quot;d1&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">DmlLog</td>
-                        <td class="vv"><pre>[d1 |-&gt; &lt;&lt;&gt;&gt;, d2 |-&gt; &lt;&lt;&gt;&gt;]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">LoggedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Messages</td>
-                        <td class="vv changed"><pre>&lt;&lt;
-  [term |-&gt; 0, source |-&gt; &quot;d2&quot;, destination |-&gt; &quot;e1&quot;, rpc_type |-&gt; &quot;SwitchToRF1Leader&quot;, commit_index |-&gt; [term |-&gt; 0, index |-&gt; 0], RF |-&gt; 2, log_index |-&gt; [term |-&gt; 0, index |-&gt; 0]],
-  [term |-&gt; 1, source |-&gt; &quot;e1&quot;, destination |-&gt; &quot;d1&quot;, rpc_type |-&gt; &quot;SwitchToRF1Leader Resp&quot;, commit_index |-&gt; [term |-&gt; 0, index |-&gt; 0], RF |-&gt; 1, ok |-&gt; TRUE]
+                        <td class="vv changed"><pre>[d1 |-&gt; 0, d2 |-&gt; 0, e1 |-&gt; 0]
+]
 &gt;&gt;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Nodes</td>
-                        <td class="vv"><pre>{&quot;e1&quot;, &quot;d1&quot;, &quot;d2&quot;}</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">NumFailures</td>
-                        <td class="vv"><pre>0</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">ReplicationFactor</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 1, d1 |-&gt; 2, d2 |-&gt; 2]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Role</td>
-                        <td class="vv"><pre>[
-  e1 |-&gt; &quot;elector&quot;,
-  d1 |-&gt; &quot;candidate&quot;,
-  d2 |-&gt; &quot;candidate&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Term</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 1, d1 |-&gt; 0, d2 |-&gt; 0]</pre></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section class="state">
-            <button class="hdr" onclick="toggle(this)" aria-expanded="false">
-                <span class="pill">#5</span>
-                <span class="title">CandidateProcessSwitchToRF1Leader_OK</span>
-                <span class="chev">▸</span>
-            </button>
-            <div class="body" hidden>
-                <table class="kv">
-                    <thead><tr><th>Variable</th><th>Value</th></tr></thead>
-                    <tbody>
-                        <tr>
-                        <td class="vk">ActivatedNode</td>
-                        <td class="vv changed"><pre>&quot;d1&quot;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CommittedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CurrentLeader</td>
-                        <td class="vv"><pre>[
-  e1 |-&gt; &quot;d1&quot;,
-  d1 |-&gt; &quot;d1&quot;,
-  d2 |-&gt; &quot;d1&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">DmlLog</td>
-                        <td class="vv"><pre>[d1 |-&gt; &lt;&lt;&gt;&gt;, d2 |-&gt; &lt;&lt;&gt;&gt;]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">LoggedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Messages</td>
-                        <td class="vv changed"><pre>&lt;&lt;
-  [term |-&gt; 0, source |-&gt; &quot;d2&quot;, destination |-&gt; &quot;e1&quot;, rpc_type |-&gt; &quot;SwitchToRF1Leader&quot;, commit_index |-&gt; [term |-&gt; 0, index |-&gt; 0], RF |-&gt; 2, log_index |-&gt; [term |-&gt; 0, index |-&gt; 0]]
-&gt;&gt;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Nodes</td>
-                        <td class="vv"><pre>{&quot;e1&quot;, &quot;d1&quot;, &quot;d2&quot;}</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">NumFailures</td>
-                        <td class="vv"><pre>0</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">ReplicationFactor</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 1, d1 |-&gt; 1, d2 |-&gt; 2]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Role</td>
-                        <td class="vv changed"><pre>[
-  e1 |-&gt; &quot;elector&quot;,
-  d1 |-&gt; &quot;leader&quot;,
-  d2 |-&gt; &quot;candidate&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Term</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 1, d1 |-&gt; 1, d2 |-&gt; 0]</pre></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section class="state">
-            <button class="hdr" onclick="toggle(this)" aria-expanded="false">
-                <span class="pill">#6</span>
-                <span class="title">HardReset</span>
-                <span class="chev">▸</span>
-            </button>
-            <div class="body" hidden>
-                <table class="kv">
-                    <thead><tr><th>Variable</th><th>Value</th></tr></thead>
-                    <tbody>
-                        <tr>
-                        <td class="vk">ActivatedNode</td>
-                        <td class="vv changed"><pre>&quot;environment&quot;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CommittedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CurrentLeader</td>
-                        <td class="vv changed"><pre>[
-  e1 |-&gt; &quot;unknown&quot;,
-  d1 |-&gt; &quot;d1&quot;,
-  d2 |-&gt; &quot;d1&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">DmlLog</td>
-                        <td class="vv"><pre>[d1 |-&gt; &lt;&lt;&gt;&gt;, d2 |-&gt; &lt;&lt;&gt;&gt;]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">LoggedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Messages</td>
-                        <td class="vv"><pre>&lt;&lt;
-  [term |-&gt; 0, source |-&gt; &quot;d2&quot;, destination |-&gt; &quot;e1&quot;, rpc_type |-&gt; &quot;SwitchToRF1Leader&quot;, commit_index |-&gt; [term |-&gt; 0, index |-&gt; 0], RF |-&gt; 2, log_index |-&gt; [term |-&gt; 0, index |-&gt; 0]]
-&gt;&gt;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Nodes</td>
-                        <td class="vv"><pre>{&quot;e1&quot;, &quot;d1&quot;, &quot;d2&quot;}</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">NumFailures</td>
-                        <td class="vv changed"><pre>1</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">ReplicationFactor</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 2, d1 |-&gt; 1, d2 |-&gt; 2]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Role</td>
-                        <td class="vv"><pre>[
-  e1 |-&gt; &quot;elector&quot;,
-  d1 |-&gt; &quot;leader&quot;,
-  d2 |-&gt; &quot;candidate&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Term</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 0, d1 |-&gt; 1, d2 |-&gt; 0]</pre></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section class="state">
-            <button class="hdr" onclick="toggle(this)" aria-expanded="false">
-                <span class="pill">#7</span>
-                <span class="title">ElectorAckSwitchToRF1Leader</span>
-                <span class="chev">▸</span>
-            </button>
-            <div class="body" hidden>
-                <table class="kv">
-                    <thead><tr><th>Variable</th><th>Value</th></tr></thead>
-                    <tbody>
-                        <tr>
-                        <td class="vk">ActivatedNode</td>
-                        <td class="vv changed"><pre>&quot;e1&quot;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CommittedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CurrentLeader</td>
-                        <td class="vv changed"><pre>[
-  e1 |-&gt; &quot;d2&quot;,
-  d1 |-&gt; &quot;d1&quot;,
-  d2 |-&gt; &quot;d1&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">DmlLog</td>
-                        <td class="vv"><pre>[d1 |-&gt; &lt;&lt;&gt;&gt;, d2 |-&gt; &lt;&lt;&gt;&gt;]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">LoggedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Messages</td>
-                        <td class="vv changed"><pre>&lt;&lt;
-  [term |-&gt; 1, source |-&gt; &quot;e1&quot;, destination |-&gt; &quot;d2&quot;, rpc_type |-&gt; &quot;SwitchToRF1Leader Resp&quot;, commit_index |-&gt; [term |-&gt; 0, index |-&gt; 0], RF |-&gt; 1, ok |-&gt; TRUE]
-&gt;&gt;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Nodes</td>
-                        <td class="vv"><pre>{&quot;e1&quot;, &quot;d1&quot;, &quot;d2&quot;}</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">NumFailures</td>
-                        <td class="vv"><pre>1</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">ReplicationFactor</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 1, d1 |-&gt; 1, d2 |-&gt; 2]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Role</td>
-                        <td class="vv"><pre>[
-  e1 |-&gt; &quot;elector&quot;,
-  d1 |-&gt; &quot;leader&quot;,
-  d2 |-&gt; &quot;candidate&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Term</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 1, d1 |-&gt; 1, d2 |-&gt; 0]</pre></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section class="state">
-            <button class="hdr" onclick="toggle(this)" aria-expanded="false">
-                <span class="pill">#8</span>
-                <span class="title">CandidateProcessSwitchToRF1Leader_OK</span>
-                <span class="chev">▸</span>
-            </button>
-            <div class="body" hidden>
-                <table class="kv">
-                    <thead><tr><th>Variable</th><th>Value</th></tr></thead>
-                    <tbody>
-                        <tr>
-                        <td class="vk">ActivatedNode</td>
-                        <td class="vv changed"><pre>&quot;d2&quot;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CommittedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">CurrentLeader</td>
-                        <td class="vv changed"><pre>[
-  e1 |-&gt; &quot;d2&quot;,
-  d1 |-&gt; &quot;d1&quot;,
-  d2 |-&gt; &quot;d2&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">DmlLog</td>
-                        <td class="vv"><pre>[d1 |-&gt; &lt;&lt;&gt;&gt;, d2 |-&gt; &lt;&lt;&gt;&gt;]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">LoggedIdx</td>
-                        <td class="vv"><pre>[
-  d1 |-&gt; [term |-&gt; 0, index |-&gt; 0],
-  d2 |-&gt; [term |-&gt; 0, index |-&gt; 0]
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Messages</td>
-                        <td class="vv changed"><pre>&lt;&lt;&gt;&gt;</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Nodes</td>
-                        <td class="vv"><pre>{&quot;e1&quot;, &quot;d1&quot;, &quot;d2&quot;}</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">NumFailures</td>
-                        <td class="vv"><pre>1</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">ReplicationFactor</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 1, d1 |-&gt; 1, d2 |-&gt; 1]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Role</td>
-                        <td class="vv changed"><pre>[
-  e1 |-&gt; &quot;elector&quot;,
-  d1 |-&gt; &quot;leader&quot;,
-  d2 |-&gt; &quot;leader&quot;
-]</pre></td>
-                    </tr>
-<tr>
-                        <td class="vk">Term</td>
-                        <td class="vv changed"><pre>[e1 |-&gt; 1, d1 |-&gt; 1, d2 |-&gt; 1]</pre></td>
                     </tr>
                     </tbody>
                 </table>

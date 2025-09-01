@@ -116,27 +116,97 @@ class State:
 
     @staticmethod
     def from_blob(s: str):
-        # position
         position = int(s.partition('position |-> ')[2].partition(',')[0].strip())
-        # name (strip quotes if present)
         name = s.partition('name |->')[2].partition(',\n')[0].strip().strip('"')
 
-        # variables
+        def update_depth(s: str, stack: list[str], in_str: bool) -> tuple[list[str], bool]:
+            i = 0
+            while i < len(s):
+                ch = s[i]
+
+                if in_str:
+                    if ch == '"' and (i == 0 or s[i-1] != '\\'):
+                        in_str = False
+                    i += 1
+                    continue
+
+                if ch == '"':
+                    in_str = True
+                    i += 1
+                    continue
+
+                if ch == '<' and i+1 < len(s) and s[i+1] == '<':
+                    stack.append("<<")
+                    i += 2
+                    continue
+                if ch == '>' and i+1 < len(s) and s[i+1] == '>' and stack and stack[-1] == '<<':
+                    stack.pop()
+                    i += 2
+                    continue
+
+                if ch in '[{(':
+                    stack.append(ch)
+                    i += 1
+                    continue
+                if ch in ']})':
+                    need = {']': '[', '}': '{', ')': '('}[ch]
+                    if stack and stack[-1] == need:
+                        stack.pop()
+                    i += 1
+                    continue
+
+                i += 1
+            return stack, in_str
+
         variables: dict[str, str] = {}
-        # after the first closing bracket of _TEAction
+
         var_blob = s.partition('],\n')[-1]
-        for line in var_blob.splitlines():
-            if '|->' not in line:
+        lines = var_blob.splitlines()
+
+        stack: list[str] = []
+        in_str = False
+        cur_key: str | None = None
+        cur_val_chunks: list[str] = []
+
+        for raw_line in lines:
+            line = raw_line.rstrip()
+
+            if cur_key is None:
+                if '|->' not in line:
+                    continue
+                k, _, v = line.partition('|->')
+                cur_key = k.strip().strip(',')
+                v = v.lstrip()
+
+                cur_val_chunks = [v]
+                stack, in_str = update_depth(v, stack, in_str)
+
+                if not stack and v.endswith(','):
+                    val = v.rstrip(',').strip()
+                    if len(val) > 30:
+                        val = pfmt(val)
+                    variables[cur_key] = val
+                    cur_key = None
+                    cur_val_chunks = []
                 continue
-            k, _, v = line.partition('|->')
-            k = k.strip().strip(',')
-            v = v.strip().lstrip(',').rstrip(',') 
 
-            if len(v) > 30:
-                v = pfmt(v)
-            
+            cur_val_chunks.append(line)
+            stack, in_str = update_depth(line, stack, in_str)
 
-            variables[k] = v
+            if not stack and line.endswith(','):
+                val = '\n'.join(cur_val_chunks).rstrip(',').strip()
+                if len(val) > 30:
+                    val = pfmt(val)
+                variables[cur_key] = val
+                cur_key = None
+                cur_val_chunks = []
+
+        if cur_key is not None:
+            val = '\n'.join(cur_val_chunks).strip()
+            if len(val) > 30:
+                val = pfmt(val)
+            variables[cur_key] = val
+
         return State(position, name, variables)
 
 def generate_trace_dump(states: list[State], out_path: str = "trace-dump.html") -> str:

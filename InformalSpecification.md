@@ -14,6 +14,9 @@ This is the state that each node will maintain.
 - `Role`: This is the role of the node. This can be `leader, follower, candidate, elector`. 
 - `CurrentLeader`: This is the id of the leader node. 
 
+## Rules of Thumb
+- Receiver First Semantics: Whenever a node proposes a change to leadership, term, or replication factor, it will `not` update its term first. It will simply send a request to the appropriate node. When the receiving node gets this message, it will be the first one to update the term/RF/leader. It will send an ack back to the node that initiated this change, and only then will that node update its term/RF/leader.
+
 ## RPCs
 Unfortunately, Janus is a little more complicated than Raft or Paxos: there are 5 RPCs in total. 
 - `AppendEntries RF 2`
