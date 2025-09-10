@@ -1,1 +1,2 @@
-TLA-plus-spec/Janus.toolbox/
+TLA-plus-spec/*.toolbox/
+.tlacache/
