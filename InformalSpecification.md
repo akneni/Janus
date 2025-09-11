@@ -1,3 +1,5 @@
+# This is outdated. The only up-to-date specification is the formal TLA+ spec
+
 # Overview
 While not a formal specification, this should give you the general idea. 
 A Janus cluster is comprised of 3 nodes, 2 of which are data nodes and one of which is an elector. 
