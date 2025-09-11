@@ -1,3 +1,5 @@
 TLA-plus-spec/*.toolbox/
 .tlacache/
+states/
 script.ipynb
+*.html # Ignore HTML trace dumps

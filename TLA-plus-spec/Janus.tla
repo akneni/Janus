@@ -24,6 +24,7 @@ VARIABLES
   ReplicationFactor, \* [NodeSet -> {1,2}]
   NumFailures,       \* Nat, at most 1
   CurrentLeader,     \* [NodeSet -> DataNodes \cup {"unknown","none"}]
+  Restarted,         \* [NodeSet -> {TRUE, FALSE}]
   DmlLog,            \* [DataNodes -> Seq(LogEntry)]
   Messages           \* Seq(AllMsgs)
 
@@ -260,6 +261,7 @@ TypeOk ==
   /\ NumFailures \in Nat /\ NumFailures <= 1
   /\ ReplicationFactor \in [NodeSet -> {1,2}]
   /\ CurrentLeader \in [NodeSet -> DataNodes \cup {"unknown","none"}]
+  /\ Restarted \in [NodeSet -> {TRUE, FALSE}]
   /\ DmlLog \in [DataNodes -> Seq(LogEntry)]
   /\ Messages \in Seq(AllMsgs)
 
@@ -340,6 +342,7 @@ Init ==
     /\ NumFailures = 0
     /\ ReplicationFactor = [n \in NodeSet |-> 2]
     /\ CurrentLeader = [n \in NodeSet |-> "none"]
+    /\ Restarted = [n \in NodeSet |-> FALSE]
     /\ DmlLog = [n \in DataNodes |-> <<>>]
     /\ Messages = << >>
 
@@ -358,6 +361,7 @@ FollowerSendInitWorkload(n) ==
   /\ n \in DataNodes
   /\ Role[n] = "follower"
   /\ Term[n] = 0
+  /\ Restarted[n] = FALSE
   /\ LET msg == [
          source       |-> n,
          destination  |-> OtherDataNode(n),
@@ -371,7 +375,7 @@ FollowerSendInitWorkload(n) ==
        /\ Role'          = [Role EXCEPT ![n] = "candidate"]
        /\ ActivatedNode' = n
        /\ UNCHANGED << LoggedIdx, CommittedIdx, Term, Nodes,
-                       ReplicationFactor, NumFailures, DmlLog, CurrentLeader >>
+                       ReplicationFactor, NumFailures, DmlLog, CurrentLeader, Restarted >>
 
 FollowerAckInitWorkload(f) ==
   /\ f \in DataNodes
@@ -414,11 +418,12 @@ FollowerAckInitWorkload(f) ==
      /\ Messages'      = Append(RemoveAt(Messages, idx), resp)
      /\ ActivatedNode' = f
      /\ UNCHANGED << LoggedIdx, CommittedIdx, Role, Nodes,
-                     ReplicationFactor, NumFailures, DmlLog >>
+                     ReplicationFactor, NumFailures, DmlLog, Restarted >>
 
 CandidateProcessAckInitWorkload_OK(n) ==
   /\ n \in DataNodes
   /\ Role[n] = "candidate"
+  /\ Restarted[n] = FALSE
   /\ \E i \in 1..Len(Messages) :
        LET r == Messages[i] IN
          /\ r.rpc_type = "InitWorkload Resp"
@@ -444,11 +449,12 @@ CandidateProcessAckInitWorkload_OK(n) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = n]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode'     = n
-       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 CandidateProcessAckInitWorkload_NACK(n) ==
   /\ n \in DataNodes
   /\ Role[n] = "candidate"
+  /\ Restarted[n] = FALSE
   /\ \E i \in 1..Len(Messages) :
        LET r == Messages[i] IN
          /\ r.rpc_type = "InitWorkload Resp"
@@ -476,7 +482,7 @@ CandidateProcessAckInitWorkload_NACK(n) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = newCurLdN]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode'     = n
-       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 CandidateProcessAckInitWorkload(n) ==
     CandidateProcessAckInitWorkload_OK(n) \/ CandidateProcessAckInitWorkload_NACK(n)
@@ -486,6 +492,7 @@ LeaderSendAE_RF1(n, d) ==
   /\ Role[n] = "leader"
   /\ ReplicationFactor[n] = 1
   /\ Term[n] > 0
+  /\ Restarted[n] = FALSE
   /\ d \in {0,1}
   /\ LET newMd    == [term |-> Term[n], index |-> LoggedIdx[n].index + 1]
          newEntry == [metadata |-> newMd, data |-> d]
@@ -504,7 +511,7 @@ LeaderSendAE_RF1(n, d) ==
        /\ Messages'  = Append(Messages, msg)
        /\ ActivatedNode' = n
        /\ UNCHANGED << CommittedIdx, Term, Role, Nodes,
-                       ReplicationFactor, NumFailures, CurrentLeader >>
+                       ReplicationFactor, NumFailures, CurrentLeader, Restarted >>
 
 ElectorAckAE_RF1(e) ==
   /\ e \in ElectorNodes
@@ -541,6 +548,7 @@ ElectorAckAE_RF1(e) ==
        /\ ReplicationFactor' = [ReplicationFactor EXCEPT ![e] = newRFE]
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![e] = newLeaderE]
        /\ CommittedIdx'      = [CommittedIdx EXCEPT ![e] = newCIE]
+       /\ Restarted'         = [Restarted EXCEPT ![e] = FALSE]
        /\ Messages'          = Append(RemoveAt(Messages, idx), resp)
        /\ ActivatedNode'     = e
        /\ UNCHANGED << LoggedIdx, Role, Nodes, NumFailures, DmlLog >>
@@ -577,7 +585,7 @@ LeaderProcessAckAE_RF1_OK(n) ==
        /\ CommittedIdx'      = [CommittedIdx EXCEPT ![n] = newCi]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << LoggedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 LeaderProcessAckAE_RF1_NACK(n) ==
   /\ n \in DataNodes
@@ -606,7 +614,7 @@ LeaderProcessAckAE_RF1_NACK(n) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = newCurLeadN]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 LeaderProcessAckAE_RF1(n) == LeaderProcessAckAE_RF1_OK(n) \/ LeaderProcessAckAE_RF1_NACK(n)
 
@@ -644,7 +652,7 @@ LeaderSendAE_RF2(n, d) ==
        /\ Messages'  = Append(Append(Messages, msgF), msgE)
        /\ ActivatedNode' = n
        /\ UNCHANGED << CommittedIdx, Term, Role, Nodes,
-                       ReplicationFactor, NumFailures, CurrentLeader >>
+                       ReplicationFactor, NumFailures, CurrentLeader, Restarted >>
 
 FollowerAckAE_RF2(f) ==
   /\ f \in DataNodes
@@ -690,6 +698,7 @@ FollowerAckAE_RF2(f) ==
        /\ ReplicationFactor' = [ReplicationFactor EXCEPT ![f] = newRFF]
        /\ Role'              = [Role EXCEPT ![f] = newRoleF]
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![f] = m.source]
+       /\ Restarted'         = [Restarted EXCEPT ![f] = FALSE]
        /\ IF accept THEN
             /\ DmlLog'       = [DmlLog EXCEPT ![f] = Append(@, m.logentry)]
             /\ LoggedIdx'    = [LoggedIdx EXCEPT ![f] = m.logentry.metadata]
@@ -728,6 +737,7 @@ ElectorProcessAE_RF2(e) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![e] = newLeaderE]
        /\ CommittedIdx'      = [CommittedIdx EXCEPT ![e] = newCIE]
        /\ Messages'          = RemoveAt(Messages, idx)
+       /\ Restarted'         = [Restarted EXCEPT ![e] = FALSE]
        /\ ActivatedNode'     = e
        /\ UNCHANGED << LoggedIdx, Role, Nodes, NumFailures, DmlLog >>
 
@@ -763,7 +773,7 @@ LeaderProcessAckAE_RF2_OK(n) ==
        /\ CommittedIdx'      = [CommittedIdx EXCEPT ![n] = newCi]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << LoggedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 LeaderProcessAckAE_RF2_NACK(n) ==
   /\ n \in DataNodes
@@ -792,7 +802,7 @@ LeaderProcessAckAE_RF2_NACK(n) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = newCurLeadN]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 LeaderProcessAckAE_RF2(n) == LeaderProcessAckAE_RF2_OK(n) \/ LeaderProcessAckAE_RF2_NACK(n)
 
@@ -812,7 +822,7 @@ LeaderSendSwitchToRF1(n) ==
        /\ Messages' = Append(Messages, msg)
        /\ ActivatedNode' = n
        /\ UNCHANGED << LoggedIdx, CommittedIdx, Term, Role, Nodes,
-                       ReplicationFactor, NumFailures, DmlLog, CurrentLeader >>
+                       ReplicationFactor, NumFailures, DmlLog, CurrentLeader, Restarted >>
 
 ElectorAckSwitchToRF1(e) ==
   /\ e \in ElectorNodes
@@ -850,9 +860,10 @@ ElectorAckSwitchToRF1(e) ==
        /\ ReplicationFactor' = [ReplicationFactor EXCEPT ![e] = newRFE]
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![e] = m.source]
        /\ CommittedIdx'      = [CommittedIdx EXCEPT ![e] = newCIE]
+       /\ Restarted'         = [Restarted EXCEPT ![e] = FALSE]
        /\ Messages'          = Append(RemoveAt(Messages, idx), resp)
        /\ ActivatedNode'     = e
-       /\ UNCHANGED << LoggedIdx, Role, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, Role, Nodes, NumFailures, DmlLog, Restarted >>
 
 LeaderProcessSwitchToRF1_OK(n) ==
   /\ n \in DataNodes
@@ -882,7 +893,7 @@ LeaderProcessSwitchToRF1_OK(n) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = newCurLd]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 LeaderProcessSwitchToRF1_NACK(n) ==
   /\ n \in DataNodes
@@ -910,7 +921,7 @@ LeaderProcessSwitchToRF1_NACK(n) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = newCurLd]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog, Restarted>>
 
 LeaderProcessSwitchToRF1(n) == 
     LeaderProcessSwitchToRF1_OK(n) \/ LeaderProcessSwitchToRF1_NACK(n)
@@ -934,7 +945,7 @@ FollowerSendSwitchToRF1Leader(n) ==
        /\ ActivatedNode' = n
        /\ UNCHANGED << LoggedIdx, CommittedIdx, Term, Nodes,
                        ReplicationFactor, NumFailures, DmlLog,
-                       CurrentLeader >>
+                       CurrentLeader, Restarted >>
 
 ElectorAckSwitchToRF1Leader(e) ==
   /\ e \in ElectorNodes
@@ -983,7 +994,7 @@ ElectorAckSwitchToRF1Leader(e) ==
                  /\ CommittedIdx'      = [CommittedIdx EXCEPT ![e] = newCIE]
                  /\ Messages'          = Append(RemoveAt(Messages, idx), resp)
                  /\ ActivatedNode'     = e
-                 /\ UNCHANGED << LoggedIdx, Role, Nodes, NumFailures, DmlLog >>
+                 /\ UNCHANGED << LoggedIdx, Role, Nodes, NumFailures, DmlLog, Restarted >>
 
 CandidateProcessSwitchToRF1Leader_OK(n) ==
   /\ n \in DataNodes
@@ -1016,11 +1027,12 @@ CandidateProcessSwitchToRF1Leader_OK(n) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = newCurLd]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 CandidateProcessSwitchToRF1Leader_NACK(n) ==
   /\ n \in DataNodes
   /\ Role[n] = "candidate"
+  /\ Restarted[n] = FALSE
   /\ \E i \in 1..Len(Messages) :
        LET r == Messages[i] IN
          /\ r.rpc_type = "SwitchToRF1Leader Resp"
@@ -1045,7 +1057,7 @@ CandidateProcessSwitchToRF1Leader_NACK(n) ==
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = newCurLeadN]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog >>
+       /\ UNCHANGED << LoggedIdx, CommittedIdx, Nodes, NumFailures, DmlLog, Restarted >>
 
 CandidateProcessSwitchToRF1Leader(n) ==
   CandidateProcessSwitchToRF1Leader_OK(n) \/ CandidateProcessSwitchToRF1Leader_NACK(n)
@@ -1077,7 +1089,7 @@ LeaderSendSwitchToRF2_P1(n, d) ==
        /\ LoggedIdx'    = [LoggedIdx EXCEPT ![n] = newMd]
        /\ Messages'     = Append(Messages, msgF)
        /\ ActivatedNode' = n
-       /\ UNCHANGED << Term, Role, Nodes, ReplicationFactor, NumFailures, CurrentLeader, CommittedIdx >>
+       /\ UNCHANGED << Term, Role, Nodes, ReplicationFactor, NumFailures, CurrentLeader, CommittedIdx, Restarted >>
 
 FollowerAckSwitchToRF2_P1(f) ==
   /\ f \in DataNodes
@@ -1112,6 +1124,7 @@ FollowerAckSwitchToRF2_P1(f) ==
        /\ LoggedIdx'         = [LoggedIdx EXCEPT ![f] = m.logged_idx]
        /\ CommittedIdx'      = [CommittedIdx EXCEPT ![f] = newCI]
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![f] = m.source]
+       /\ Restarted'         = [Restarted EXCEPT ![f] = FALSE]
        /\ Messages'          = Append(RemoveAt(Messages, idx), respOk)
        /\ ActivatedNode' = f
        /\ UNCHANGED << Nodes, NumFailures >>
@@ -1153,7 +1166,7 @@ LeaderProcessAckSwitchToRF2_P1(n) ==
         /\ Messages'          = Append(RemoveAt(Messages, idx), msgE)
         /\ NumFailures'       = 0
         /\ ActivatedNode' = n
-        /\ UNCHANGED << LoggedIdx, Nodes, DmlLog >>
+        /\ UNCHANGED << LoggedIdx, Nodes, DmlLog, Restarted >>
 
 ElectorAckSwitchToRF2_P2(e) ==
   /\ e \in ElectorNodes
@@ -1178,6 +1191,7 @@ ElectorAckSwitchToRF2_P2(e) ==
        /\ ReplicationFactor' = [ReplicationFactor EXCEPT ![e] = newRFE]
        /\ CurrentLeader'     = [CurrentLeader EXCEPT ![e] = m.source]
        /\ CommittedIdx'      = [CommittedIdx EXCEPT ![e] = newCIE]
+       /\ Restarted'         = [Restarted EXCEPT ![e] = FALSE]
        /\ Messages'          = RemoveAt(Messages, idx)
        /\ ActivatedNode'     = e
        /\ UNCHANGED << LoggedIdx, Role, Nodes, NumFailures, DmlLog >>
@@ -1192,7 +1206,7 @@ ElectorAckSwitchToRF2_P2(e) ==
         /\ Messages' = RemoveAt(Messages, i)
         /\ ActivatedNode' = "environment"
         /\ UNCHANGED << LoggedIdx, CommittedIdx, Term, Role, Nodes,
-                        ReplicationFactor, NumFailures, CurrentLeader, DmlLog >>
+                        ReplicationFactor, NumFailures, CurrentLeader, DmlLog, Restarted>>
 
 DupMsg ==
   /\ Len(Messages) > 0
@@ -1200,7 +1214,7 @@ DupMsg ==
        /\ Messages' = Append(Messages, Messages[i])
        /\ ActivatedNode' = "environment"
        /\ UNCHANGED << LoggedIdx, CommittedIdx, Term, Role, Nodes,
-                       ReplicationFactor, NumFailures, CurrentLeader, DmlLog >>
+                       ReplicationFactor, NumFailures, CurrentLeader, DmlLog, Restarted >>
 
 HardReset ==
     /\ FALSE
@@ -1212,6 +1226,7 @@ HardReset ==
             /\ DmlLog'       = [DmlLog EXCEPT ![n] = <<>>]
             /\ Term'         = [Term EXCEPT ![n] = 0]
             /\ Role'         = [Role EXCEPT ![n] = "follower"]
+            /\ Restarted'    = [Restarted EXCEPT ![n] = TRUE]
             /\ NumFailures'  = 1
             /\ CurrentLeader' =
                 [CurrentLeader EXCEPT ![n] = OtherDataNode(n)]
@@ -1229,11 +1244,12 @@ HardReset ==
                 [ReplicationFactor EXCEPT ![n] = 2]
             /\ CurrentLeader' =
                 [CurrentLeader EXCEPT ![n] = "unknown"]
+            /\ Restarted' = 
+                [Restarted EXCEPT ![n] = TRUE]
             /\ ActivatedNode' = n
             /\ UNCHANGED << Nodes, Messages, LoggedIdx, DmlLog >>
 
 HardResetWipeMsgs ==
-  /\ FALSE
   /\ NumFailures = 0
   /\ \E n \in Nodes :
        LET msgsNoN == KeepNotDest(Messages, n)
@@ -1246,6 +1262,7 @@ HardResetWipeMsgs ==
            /\ Role'              = [Role EXCEPT ![n] = "follower"]
            /\ ReplicationFactor' = [ReplicationFactor EXCEPT ![n] = 2]
            /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = OtherDataNode(n)]
+           /\ Restarted'         = [Restarted EXCEPT ![n] = TRUE]
            /\ NumFailures'       = 1
            /\ Messages'          = msgsNoN
            /\ ActivatedNode'     = n
@@ -1256,6 +1273,7 @@ HardResetWipeMsgs ==
            /\ ReplicationFactor' = [ReplicationFactor EXCEPT ![n] = 2]
            /\ CurrentLeader'     = [CurrentLeader EXCEPT ![n] = "unknown"]
            /\ CommittedIdx'      = [CommittedIdx EXCEPT ![n] = [term |-> 0, index |-> 0]]
+           /\ Restarted'         = [Restarted EXCEPT ![n] = TRUE]
            /\ NumFailures'       = 1
            /\ Messages'          = msgsNoN
            /\ ActivatedNode'     = n
@@ -1326,7 +1344,7 @@ StateConstraint ==
 
 =============================================================================
 \* Modification History
-\* Last modified Sat Sep 06 17:27:41 PDT 2025 by aknen
+\* Last modified Wed Sep 10 23:15:44 PDT 2025 by aknen
 \* Created Thu Aug 28 19:55:21 PDT 2025 by aknen
 
 

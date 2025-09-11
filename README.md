@@ -1,14 +1,23 @@
 ![Banner](.assets/janus-banner.png)
 
-# What is Janus
-Janus is a practical consensus algorithm inspired by Raft. The key distinction is that it provides all of raft's safety guarantees while only requiring 2 of the 3 nodes to maintain a full raft log (and datafiles for the underlying database). 
+# Overview
+Janus is a practical consensus algorithm inspired by Raft. Unlike Raft, Janus only requires two of three nodes to maintain a full log and underlying database/application state; the third node acts as an arbiter in elections, holds < 100 bytes of state, and does not need to be send log entries during append entries requests. 
 
-# Should I consider Janus
+# Why Janus?
 Janus requires 1/3 less hardware and 1/2 less bandwidth than other common consensus protocols such as Raft and Paxos. 
 However, it is complex to reason about and even more so to implement. Additionally, a failed node is not considered to be online until it is brought back online *and* catches up with the leader node. This means that node recovery will take meaningfully longer when using Janus than when using Raft/Paxos. 
 
+|                        | Paxos | Raft | Janus |
+|------------------------|-------|------|-------|
+| Strong Consistency  | ✅     | ✅    | ✅  |
+| Hardware Requirements  | ❌     | ❌    | ✅  |
+| Bandwidth Requirements  | ❌     | ❌    | ✅     |
+| Ease of Implementation | ❌     | ✅    | ❌     |
+| Failover Time | ✅     | ✅    | ❌     |
+
+
 # Proof Assumptions
-Fault Model: crash stop (crash recover may or may not be on the road map)
+Fault Model: Crash Recover
 Timing Model: Asynchronous Timing Model
 
 # Safety Properties
