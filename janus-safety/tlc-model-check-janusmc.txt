@@ -1,0 +1,20 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 12 and seed 1858029926784481464 with 12 workers on 32 cores with 10923MB heap and 64MB offheap memory [pid: 2157092] (Linux 6.12.10-76061203-generic amd64, Ubuntu 17.0.16 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/aknen/MEGA/Code/__projects/Janus/TLA-plus-spec/JanusMc.tla
+Parsing file /tmp/Integers.tla
+Parsing file /tmp/FiniteSets.tla
+Parsing file /tmp/Sequences.tla
+Parsing file /tmp/Naturals.tla
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module JanusMc
+Starting... (2025-09-11 00:03:11)
+Warning: The subscript of the next-state relation specified by the specification
+does not seem to contain the state variable Restarted
+(Use the -nowarning option to disable this warning.)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2025-09-11 00:03:11.
+Progress(12) at 2025-09-11 00:03:14: 309,243 states generated (309,243 s/min), 148,228 distinct states found (148,228 ds/min), 123,251 states left on queue.
+Progress(13) at 2025-09-11 00:04:14: 8,878,786 states generated (8,569,543 s/min), 3,936,742 distinct states found (3,788,514 ds/min), 3,363,013 states left on queue.
