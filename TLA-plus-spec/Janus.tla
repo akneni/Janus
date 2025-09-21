@@ -21,8 +21,9 @@ VARIABLES
   Term,              \* [NodeSet   -> 0..MaxTerm]
   Role,              \* [NodeSet   -> {"leader","candidate","follower","elector"}]
   Nodes,             \* runtime alias of NodeSet
-  ReplicationFactor, \* [NodeSet -> {1,2}]
-  NumFailures,       \* Nat, at most 1
+  NumFailures,       \* Nat, at most 2
+  ConsensusVec,      \* How the leader keeps track of which AppendEntries Reqests have consensuss
+  CurrMembershipData \* A dict of what each node thinks the membershp is (elector node is not included here)
   CurrentLeader,     \* [NodeSet -> DataNodes \cup {"unknown","none"}]
   DmlLog,            \* [DataNodes -> Seq(LogEntry)]
   Messages           \* Seq(AllMsgs)
@@ -36,8 +37,6 @@ LogEntryMd == [ term: 0..MaxTerm, index: 0..MaxIndex ]
 LogEntry ==
   [ metadata: LogEntryMd,
     data     : {0,1} ]
-
-OtherDataNode(n) == CHOOSE m \in DataNodes : m # n
 
 LastMd(s) ==
   IF Len(s) = 0 THEN [term |-> 0, index |-> 0] ELSE s[Len(s)].metadata
@@ -100,145 +99,80 @@ KeepNotDest(seq, dest) ==
 (* Message "types" as record universes (depend only on constants)          *)
 (***************************************************************************)
 MessageTypes == {
-  "AppendEntries RF1", 
-  "AppendEntries RF2",
-  "SwitchToRF1", 
-  "SwitchToRF1Leader",
-  "SwitchToRF2 P1", 
-  "SwitchToRF2 P2",
-  "InitWorkload",
-  
-  "AppendEntries RF1 Resp", 
-  "AppendEntries RF2 Resp",
-  "SwitchToRF1 Resp", 
-  "SwitchToRF1Leader Resp",
-  "SwitchToRF2 P1 Resp",
-  "InitWorkload Resp"
+  "AppendEntries", 
+  "AppendEntries RF1",
+  "RequestVote",
+  "ChangeMembership",
+
+  "AppendEntries Resp",
+  "AppendEntries RF1 Resp",
+  "RequestVote Resp",
+  "ChangeMembership Resp",
 }
+
+Ae == [
+  source       : NodeSet,
+  destination  : NodeSet,
+  rpc_type     : {"AppendEntries"},
+  term         : 0..MaxTerm,
+  committed_idx: LogEntryMd,
+  logentry     : LogEntry
+]
+AeRf1Resp == [
+  source       : NodeSet,
+  destination  : NodeSet,
+  rpc_type     : {"AppendEntries Resp"},
+  term         : 0..MaxTerm,
+  logged_idx   : LogEntryMd,
+  ok           : {TRUE,FALSE}
+]
 
 AeRf1 == [
   source       : NodeSet,
   destination  : NodeSet,
   rpc_type     : {"AppendEntries RF1"},
-  committed_idx: LogEntryMd,
   term         : 0..MaxTerm,
-  RF           : 1..2,
-  logentry_md  : LogEntryMd
+  committed_idx: LogEntryMd,
+  logentry     : LogEntry
 ]
 AeRf1Resp == [
   source       : NodeSet,
   destination  : NodeSet,
   rpc_type     : {"AppendEntries RF1 Resp"},
-  logged_idx   : LogEntryMd,
-  committed_idx: LogEntryMd,
   term         : 0..MaxTerm,
-  RF           : 1..2,
+  committed_idx: LogEntryMd,
   ok           : {TRUE,FALSE}
 ]
 
-AeRf2 == [
+ReqVote == [
   source       : NodeSet,
   destination  : NodeSet,
-  rpc_type     : {"AppendEntries RF2"},
-  committed_idx: LogEntryMd,
+  rpc_type     : {"Request Vote"},
   term         : 0..MaxTerm,
-  RF           : 1..2,
-  logentry     : LogEntry
-]
-AeRf2Resp == [
-  source       : NodeSet,
-  destination  : NodeSet,
-  rpc_type     : {"AppendEntries RF2 Resp"},
   logged_idx   : LogEntryMd,
-  committed_idx: LogEntryMd,
+]
+ReqVoteResp == [
+  source       : NodeSet,
+  destination  : NodeSet,
+  rpc_type     : {"Request Vote Resp"},
   term         : 0..MaxTerm,
-  RF           : 1..2,
   ok           : {TRUE,FALSE}
 ]
 
-StRf1 == [
+ChangeMem == [
   source       : NodeSet,
   destination  : NodeSet,
-  rpc_type     : {"SwitchToRF1"},
-  committed_idx: LogEntryMd,
+  rpc_type     : {"Change Membership"},
   term         : 0..MaxTerm,
-  RF           : 1..2
-]
-StRf1Resp == [
-  source       : NodeSet,
-  destination  : NodeSet,
-  rpc_type     : {"SwitchToRF1 Resp"},
-  committed_idx: LogEntryMd,
-  term         : 0..MaxTerm,
-  RF           : 1..2,
-  ok           : {TRUE,FALSE}
-]
-
-StRf1L == [
-  source       : NodeSet,
-  destination  : NodeSet,
-  rpc_type     : {"SwitchToRF1Leader"},
   logged_idx   : LogEntryMd,
-  committed_idx: LogEntryMd,
-  term         : 0..MaxTerm,
-  RF           : 1..2
+  NewMembership: Seq(DataNodes)
 ]
-StRf1LResp == [
+ChangeMemResp == [
   source       : NodeSet,
   destination  : NodeSet,
-  rpc_type     : {"SwitchToRF1Leader Resp"},
-  committed_idx: LogEntryMd,
+  rpc_type     : {"Change Membership Resp"},
   term         : 0..MaxTerm,
-  RF           : 1..2,
   ok           : {TRUE,FALSE}
-]
-
-StRf2P1 == [
-  source       : NodeSet,
-  destination  : NodeSet,
-  rpc_type     : {"SwitchToRF2 P1"},
-  logged_idx   : LogEntryMd,  
-  committed_idx: LogEntryMd,
-  term         : 0..MaxTerm,
-  RF           : 1..2,
-  dml_log      : Seq(LogEntry)
-]
-StRf2P1Resp == [
-  source       : NodeSet,
-  destination  : NodeSet,
-  rpc_type     : {"SwitchToRF2 P1 Resp"},
-  logged_idx   : LogEntryMd,
-  committed_idx: LogEntryMd,
-  term         : 0..MaxTerm,
-  RF           : 1..2
-]
-
-StRf2P2 == [
-  source       : NodeSet,
-  destination  : NodeSet,
-  rpc_type     : {"SwitchToRF2 P2"},
-  committed_idx: LogEntryMd,
-  term         : 0..MaxTerm,
-  RF           : 1..2
-]
-
-InitWorkload == [
-  source      : NodeSet,
-  destination : NodeSet,
-  rpc_type    : {"InitWorkload"},
-  logged_index: LogEntryMd,
-  term        : 0..MaxTerm,
-  RF          : 1..2
-]
-
-InitWorkloadResp == [
-  source      : NodeSet,
-  destination : NodeSet,
-  rpc_type    : {"InitWorkload Resp"},
-  logged_index: LogEntryMd,
-  term        : 0..MaxTerm,
-  RF          : 1..2,
-  ok          : {TRUE, FALSE}
 ]
 
 AllMsgs ==

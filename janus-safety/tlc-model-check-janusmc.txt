@@ -18,3 +18,392 @@ Computing initial states...
 Finished computing initial states: 1 distinct state generated at 2025-09-11 00:03:11.
 Progress(12) at 2025-09-11 00:03:14: 309,243 states generated (309,243 s/min), 148,228 distinct states found (148,228 ds/min), 123,251 states left on queue.
 Progress(13) at 2025-09-11 00:04:14: 8,878,786 states generated (8,569,543 s/min), 3,936,742 distinct states found (3,788,514 ds/min), 3,363,013 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:05:14)
+Progress(14) at 2025-09-11 00:05:14: 17,686,895 states generated (8,808,109 s/min), 7,313,554 distinct states found (3,376,812 ds/min), 6,250,227 states left on queue.
+Progress(14) at 2025-09-11 00:06:14: 26,521,078 states generated (8,834,183 s/min), 10,643,013 distinct states found (3,329,459 ds/min), 9,093,274 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:07:15)
+Progress(14) at 2025-09-11 00:07:15: 35,518,030 states generated (8,996,952 s/min), 14,014,315 distinct states found (3,371,302 ds/min), 11,974,124 states left on queue.
+Progress(14) at 2025-09-11 00:08:15: 44,514,508 states generated (8,996,478 s/min), 17,442,960 distinct states found (3,428,645 ds/min), 14,912,113 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:09:15)
+Progress(14) at 2025-09-11 00:09:15: 52,746,908 states generated (8,232,400 s/min), 21,012,348 distinct states found (3,569,388 ds/min), 17,991,379 states left on queue.
+Progress(14) at 2025-09-11 00:10:15: 61,174,433 states generated (8,427,525 s/min), 24,756,773 distinct states found (3,744,425 ds/min), 21,250,130 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:11:15)
+Progress(14) at 2025-09-11 00:11:15: 69,853,164 states generated (8,678,731 s/min), 28,694,171 distinct states found (3,937,398 ds/min), 24,660,989 states left on queue.
+Progress(14) at 2025-09-11 00:12:15: 78,367,913 states generated (8,514,749 s/min), 32,054,289 distinct states found (3,360,118 ds/min), 27,563,717 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:13:15)
+Progress(14) at 2025-09-11 00:13:15: 87,194,727 states generated (8,826,814 s/min), 35,305,172 distinct states found (3,250,883 ds/min), 30,351,452 states left on queue.
+Progress(15) at 2025-09-11 00:14:15: 96,009,169 states generated (8,814,442 s/min), 38,452,290 distinct states found (3,147,118 ds/min), 33,044,660 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:15:15)
+Progress(15) at 2025-09-11 00:15:15: 105,214,124 states generated (9,204,955 s/min), 41,523,978 distinct states found (3,071,688 ds/min), 35,677,099 states left on queue.
+Progress(15) at 2025-09-11 00:16:15: 114,174,348 states generated (8,960,224 s/min), 44,666,663 distinct states found (3,142,685 ds/min), 38,368,352 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:17:15)
+Progress(15) at 2025-09-11 00:17:15: 123,436,500 states generated (9,262,152 s/min), 47,882,654 distinct states found (3,215,991 ds/min), 41,128,413 states left on queue.
+Progress(15) at 2025-09-11 00:18:15: 132,729,795 states generated (9,293,295 s/min), 51,098,507 distinct states found (3,215,853 ds/min), 43,891,002 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:19:15)
+Progress(15) at 2025-09-11 00:19:15: 141,592,174 states generated (8,862,379 s/min), 54,236,498 distinct states found (3,137,991 ds/min), 46,585,354 states left on queue.
+Progress(15) at 2025-09-11 00:20:15: 150,342,279 states generated (8,750,105 s/min), 57,369,010 distinct states found (3,132,512 ds/min), 49,262,871 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:21:15)
+Progress(15) at 2025-09-11 00:21:15: 159,100,733 states generated (8,758,454 s/min), 60,516,887 distinct states found (3,147,877 ds/min), 51,947,315 states left on queue.
+Progress(15) at 2025-09-11 00:22:15: 168,564,306 states generated (9,463,573 s/min), 63,790,887 distinct states found (3,274,000 ds/min), 54,742,157 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:23:15)
+Progress(15) at 2025-09-11 00:23:15: 177,707,844 states generated (9,143,538 s/min), 66,878,651 distinct states found (3,087,764 ds/min), 57,379,296 states left on queue.
+Progress(15) at 2025-09-11 00:24:15: 186,830,499 states generated (9,122,655 s/min), 70,008,694 distinct states found (3,130,043 ds/min), 60,063,371 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:25:15)
+Progress(15) at 2025-09-11 00:25:15: 196,053,723 states generated (9,223,224 s/min), 73,156,300 distinct states found (3,147,606 ds/min), 62,766,992 states left on queue.
+Progress(15) at 2025-09-11 00:26:15: 204,920,519 states generated (8,866,796 s/min), 76,302,233 distinct states found (3,145,933 ds/min), 65,479,430 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:27:15)
+Progress(15) at 2025-09-11 00:27:15: 214,305,811 states generated (9,385,292 s/min), 79,514,010 distinct states found (3,211,777 ds/min), 68,231,905 states left on queue.
+Progress(15) at 2025-09-11 00:28:15: 223,691,981 states generated (9,386,170 s/min), 82,738,454 distinct states found (3,224,444 ds/min), 71,010,385 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:29:15)
+Progress(15) at 2025-09-11 00:29:15: 232,957,705 states generated (9,265,724 s/min), 85,929,983 distinct states found (3,191,529 ds/min), 73,746,002 states left on queue.
+Progress(15) at 2025-09-11 00:30:15: 242,015,924 states generated (9,058,219 s/min), 89,091,741 distinct states found (3,161,758 ds/min), 76,455,928 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:31:15)
+Progress(15) at 2025-09-11 00:31:15: 250,694,194 states generated (8,678,270 s/min), 92,180,120 distinct states found (3,088,379 ds/min), 79,085,532 states left on queue.
+Progress(15) at 2025-09-11 00:32:15: 259,849,666 states generated (9,155,472 s/min), 95,271,579 distinct states found (3,091,459 ds/min), 81,716,941 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:33:15)
+Progress(15) at 2025-09-11 00:33:15: 268,931,969 states generated (9,082,303 s/min), 98,477,130 distinct states found (3,205,551 ds/min), 84,469,937 states left on queue.
+Progress(15) at 2025-09-11 00:34:15: 277,726,059 states generated (8,794,090 s/min), 101,729,335 distinct states found (3,252,205 ds/min), 87,270,456 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:35:15)
+Progress(15) at 2025-09-11 00:35:15: 286,894,425 states generated (9,168,366 s/min), 104,929,006 distinct states found (3,199,671 ds/min), 90,012,150 states left on queue.
+Progress(15) at 2025-09-11 00:36:15: 295,812,337 states generated (8,917,912 s/min), 108,123,572 distinct states found (3,194,566 ds/min), 92,768,491 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:37:15)
+Progress(15) at 2025-09-11 00:37:15: 304,926,863 states generated (9,114,526 s/min), 111,291,653 distinct states found (3,168,081 ds/min), 95,493,208 states left on queue.
+Progress(15) at 2025-09-11 00:38:15: 314,582,451 states generated (9,655,588 s/min), 114,573,416 distinct states found (3,281,763 ds/min), 98,309,599 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:39:15)
+Progress(15) at 2025-09-11 00:39:15: 323,609,209 states generated (9,026,758 s/min), 117,715,140 distinct states found (3,141,724 ds/min), 100,998,555 states left on queue.
+Progress(15) at 2025-09-11 00:40:15: 333,024,200 states generated (9,414,991 s/min), 120,968,371 distinct states found (3,253,231 ds/min), 103,781,917 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:41:15)
+Progress(15) at 2025-09-11 00:41:15: 341,460,451 states generated (8,436,251 s/min), 124,142,954 distinct states found (3,174,583 ds/min), 106,503,099 states left on queue.
+Progress(15) at 2025-09-11 00:42:15: 349,778,221 states generated (8,317,770 s/min), 127,389,204 distinct states found (3,246,250 ds/min), 109,305,236 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:43:15)
+Progress(15) at 2025-09-11 00:43:15: 358,446,297 states generated (8,668,076 s/min), 130,837,823 distinct states found (3,448,619 ds/min), 112,281,640 states left on queue.
+Progress(15) at 2025-09-11 00:44:15: 367,018,735 states generated (8,572,438 s/min), 134,203,955 distinct states found (3,366,132 ds/min), 115,176,182 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:45:15)
+Progress(15) at 2025-09-11 00:45:15: 374,254,860 states generated (7,236,125 s/min), 137,216,736 distinct states found (3,012,781 ds/min), 117,773,068 states left on queue.
+Progress(15) at 2025-09-11 00:46:15: 381,948,076 states generated (7,693,216 s/min), 140,403,065 distinct states found (3,186,329 ds/min), 120,547,037 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:47:15)
+Progress(15) at 2025-09-11 00:47:15: 389,772,553 states generated (7,824,477 s/min), 143,555,613 distinct states found (3,152,548 ds/min), 123,288,601 states left on queue.
+Progress(15) at 2025-09-11 00:48:15: 397,975,483 states generated (8,202,930 s/min), 146,864,289 distinct states found (3,308,676 ds/min), 126,164,758 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:49:16)
+Progress(15) at 2025-09-11 00:49:16: 406,388,272 states generated (8,412,789 s/min), 150,192,589 distinct states found (3,328,300 ds/min), 129,054,623 states left on queue.
+Progress(15) at 2025-09-11 00:50:16: 415,076,262 states generated (8,687,990 s/min), 153,643,763 distinct states found (3,451,174 ds/min), 132,055,371 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:51:16)
+Progress(15) at 2025-09-11 00:51:16: 422,960,290 states generated (7,884,028 s/min), 157,070,245 distinct states found (3,426,482 ds/min), 135,047,650 states left on queue.
+Progress(15) at 2025-09-11 00:52:16: 430,895,146 states generated (7,934,856 s/min), 160,381,193 distinct states found (3,310,948 ds/min), 137,942,584 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:53:16)
+Progress(15) at 2025-09-11 00:53:16: 439,243,067 states generated (8,347,921 s/min), 163,810,265 distinct states found (3,429,072 ds/min), 140,942,310 states left on queue.
+Progress(15) at 2025-09-11 00:54:16: 447,623,396 states generated (8,380,329 s/min), 167,263,758 distinct states found (3,453,493 ds/min), 143,959,689 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:55:16)
+Progress(15) at 2025-09-11 00:55:16: 456,015,528 states generated (8,392,132 s/min), 170,634,199 distinct states found (3,370,441 ds/min), 146,904,305 states left on queue.
+Progress(15) at 2025-09-11 00:56:16: 464,220,602 states generated (8,205,074 s/min), 174,127,571 distinct states found (3,493,372 ds/min), 149,955,153 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:57:16)
+Progress(15) at 2025-09-11 00:57:16: 472,470,285 states generated (8,249,683 s/min), 177,483,814 distinct states found (3,356,243 ds/min), 152,879,411 states left on queue.
+Progress(15) at 2025-09-11 00:58:16: 481,112,662 states generated (8,642,377 s/min), 180,953,444 distinct states found (3,469,630 ds/min), 155,906,792 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 00:59:16)
+Progress(15) at 2025-09-11 00:59:16: 488,870,387 states generated (7,757,725 s/min), 184,580,768 distinct states found (3,627,324 ds/min), 159,085,011 states left on queue.
+Progress(15) at 2025-09-11 01:00:16: 496,800,474 states generated (7,930,087 s/min), 188,237,522 distinct states found (3,656,754 ds/min), 162,267,970 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 01:01:16)
+Progress(15) at 2025-09-11 01:01:16: 505,221,476 states generated (8,421,002 s/min), 191,908,071 distinct states found (3,670,549 ds/min), 165,464,640 states left on queue.
+Progress(15) at 2025-09-11 01:02:16: 513,381,234 states generated (8,159,758 s/min), 195,267,637 distinct states found (3,359,566 ds/min), 168,392,612 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 01:03:16)
+Progress(15) at 2025-09-11 01:03:16: 521,948,602 states generated (8,567,368 s/min), 198,632,735 distinct states found (3,365,098 ds/min), 171,330,770 states left on queue.
+Progress(15) at 2025-09-11 01:04:16: 530,587,574 states generated (8,638,972 s/min), 202,196,430 distinct states found (3,563,695 ds/min), 174,443,916 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 01:05:16)
+Progress(15) at 2025-09-11 01:05:16: 539,182,607 states generated (8,595,033 s/min), 205,921,528 distinct states found (3,725,098 ds/min), 177,695,248 states left on queue.
+Progress(15) at 2025-09-11 01:06:16: 547,537,082 states generated (8,354,475 s/min), 209,399,935 distinct states found (3,478,407 ds/min), 180,706,108 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 01:07:16)
+Progress(15) at 2025-09-11 01:07:16: 555,912,240 states generated (8,375,158 s/min), 212,708,476 distinct states found (3,308,541 ds/min), 183,592,938 states left on queue.
+Progress(15) at 2025-09-11 01:08:16: 564,141,552 states generated (8,229,312 s/min), 215,750,740 distinct states found (3,042,264 ds/min), 186,209,854 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 01:09:16)
+Progress(15) at 2025-09-11 01:09:16: 572,437,696 states generated (8,296,144 s/min), 218,739,185 distinct states found (2,988,445 ds/min), 188,792,278 states left on queue.
+Progress(15) at 2025-09-11 01:10:16: 580,913,346 states generated (8,475,650 s/min), 221,871,113 distinct states found (3,131,928 ds/min), 191,507,994 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 01:11:16)
+Progress(15) at 2025-09-11 01:11:16: 589,580,988 states generated (8,667,642 s/min), 225,030,765 distinct states found (3,159,652 ds/min), 194,249,282 states left on queue.
+Progress(15) at 2025-09-11 01:12:16: 597,833,266 states generated (8,252,278 s/min), 228,020,822 distinct states found (2,990,057 ds/min), 196,838,638 states left on queue.
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 01:13:16)
+Progress(15) at 2025-09-11 01:13:16: 606,445,877 states generated (8,612,611 s/min), 231,153,954 distinct states found (3,133,132 ds/min), 199,556,681 states left on queue.
+Error: Invariant AllInvariants is violated.
+Error: The behavior up to this point is:
+State 1: <Initial predicate>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 0, index |-> 0],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 0, index |-> 0]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 0
+/\ DmlLog = [d1 |-> <<>>, d2 |-> <<>>]
+/\ ActivatedNode = "none"
+/\ Term = [d1 |-> 0, d2 |-> 0, e1 |-> 0]
+/\ Role = [d1 |-> "follower", d2 |-> "follower", e1 |-> "elector"]
+/\ Messages = <<>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "none", d2 |-> "none", e1 |-> "none"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 2: <FollowerSendInitWorkload line 365, col 3 to line 382, col 90 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 0, index |-> 0],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 0, index |-> 0]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 0
+/\ DmlLog = [d1 |-> <<>>, d2 |-> <<>>]
+/\ ActivatedNode = "d2"
+/\ Term = [d1 |-> 0, d2 |-> 0, e1 |-> 0]
+/\ Role = [d1 |-> "follower", d2 |-> "candidate", e1 |-> "elector"]
+/\ Messages = <<[term |-> 0, destination |-> "d1", source |-> "d2", rpc_type |-> "InitWorkload", RF |-> 2, logged_index |-> [term |-> 0, index |-> 0]]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "none", d2 |-> "none", e1 |-> "none"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 3: <FollowerAckInitWorkload line 385, col 3 to line 425, col 73 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 0, index |-> 0],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 0, index |-> 0]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 0
+/\ DmlLog = [d1 |-> <<>>, d2 |-> <<>>]
+/\ ActivatedNode = "d1"
+/\ Term = [d1 |-> 1, d2 |-> 0, e1 |-> 0]
+/\ Role = [d1 |-> "follower", d2 |-> "candidate", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "d2", source |-> "d1", rpc_type |-> "InitWorkload Resp", RF |-> 2, ok |-> TRUE, logged_index |-> [term |-> 0, index |-> 0]]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "none", e1 |-> "none"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 4: <CandidateProcessAckInitWorkload_OK line 428, col 3 to line 456, col 88 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 0, index |-> 0],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 0, index |-> 0]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 0
+/\ DmlLog = [d1 |-> <<>>, d2 |-> <<>>]
+/\ ActivatedNode = "d2"
+/\ Term = [d1 |-> 1, d2 |-> 1, e1 |-> 0]
+/\ Role = [d1 |-> "follower", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "none"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 5: <LeaderSendAE_RF2 line 626, col 3 to line 659, col 82 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 0, index |-> 0],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 1, index |-> 1]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 0
+/\ DmlLog = [d1 |-> <<>>, d2 |-> <<[metadata |-> [term |-> 1, index |-> 1], data |-> 0]>>]
+/\ ActivatedNode = "d2"
+/\ Term = [d1 |-> 1, d2 |-> 1, e1 |-> 0]
+/\ Role = [d1 |-> "follower", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "d1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 0, index |-> 0], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 1], data |-> 0]], [term |-> 1, destination |-> "e1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 0, index |-> 0], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 1], data |-> 0]]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "none"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 6: <FollowerAckAE_RF2 line 662, col 3 to line 716, col 82 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 0, index |-> 0],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 1, index |-> 1], d2 |-> [term |-> 1, index |-> 1]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 0
+/\ DmlLog = [ d1 |-> <<[metadata |-> [term |-> 1, index |-> 1], data |-> 0]>>,
+  d2 |-> <<[metadata |-> [term |-> 1, index |-> 1], data |-> 0]>> ]
+/\ ActivatedNode = "d1"
+/\ Term = [d1 |-> 1, d2 |-> 1, e1 |-> 0]
+/\ Role = [d1 |-> "follower", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "e1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 0, index |-> 0], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 1], data |-> 0]], [term |-> 1, destination |-> "d2", source |-> "d1", rpc_type |-> "AppendEntries RF2 Resp", committed_idx |-> [term |-> 0, index |-> 0], RF |-> 2, logged_idx |-> [term |-> 1, index |-> 1], ok |-> TRUE]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "none"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 7: <ElectorProcessAE_RF2 line 719, col 3 to line 746, col 69 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 0, index |-> 0],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 1, index |-> 1], d2 |-> [term |-> 1, index |-> 1]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 0
+/\ DmlLog = [ d1 |-> <<[metadata |-> [term |-> 1, index |-> 1], data |-> 0]>>,
+  d2 |-> <<[metadata |-> [term |-> 1, index |-> 1], data |-> 0]>> ]
+/\ ActivatedNode = "e1"
+/\ Term = [d1 |-> 1, d2 |-> 1, e1 |-> 1]
+/\ Role = [d1 |-> "follower", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "d2", source |-> "d1", rpc_type |-> "AppendEntries RF2 Resp", committed_idx |-> [term |-> 0, index |-> 0], RF |-> 2, logged_idx |-> [term |-> 1, index |-> 1], ok |-> TRUE]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "d2"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 8: <LeaderProcessAckAE_RF2_OK line 749, col 3 to line 780, col 74 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 1, index |-> 1],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 1, index |-> 1], d2 |-> [term |-> 1, index |-> 1]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 0
+/\ DmlLog = [ d1 |-> <<[metadata |-> [term |-> 1, index |-> 1], data |-> 0]>>,
+  d2 |-> <<[metadata |-> [term |-> 1, index |-> 1], data |-> 0]>> ]
+/\ ActivatedNode = "d2"
+/\ Term = [d1 |-> 1, d2 |-> 1, e1 |-> 1]
+/\ Role = [d1 |-> "follower", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "d2"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 9: <HardResetWipeMsgs line 1257, col 3 to line 1284, col 54 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 1, index |-> 1],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 1, index |-> 1]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 1
+/\ DmlLog = [d1 |-> <<>>, d2 |-> <<[metadata |-> [term |-> 1, index |-> 1], data |-> 0]>>]
+/\ ActivatedNode = "d1"
+/\ Term = [d1 |-> 0, d2 |-> 1, e1 |-> 1]
+/\ Role = [d1 |-> "follower", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<>>
+/\ Restarted = [d1 |-> TRUE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "d2"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 10: <LeaderSendAE_RF2 line 626, col 3 to line 659, col 82 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 1, index |-> 1],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 1, index |-> 2]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 1
+/\ DmlLog = [ d1 |-> <<>>,
+  d2 |->
+      << [metadata |-> [term |-> 1, index |-> 1], data |-> 0],
+         [metadata |-> [term |-> 1, index |-> 2], data |-> 0] >> ]
+/\ ActivatedNode = "d2"
+/\ Term = [d1 |-> 0, d2 |-> 1, e1 |-> 1]
+/\ Role = [d1 |-> "follower", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "d1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 2], data |-> 0]], [term |-> 1, destination |-> "e1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 2], data |-> 0]]>>
+/\ Restarted = [d1 |-> TRUE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "d2"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 11: <FollowerAckAE_RF2 line 662, col 3 to line 716, col 82 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 1, index |-> 1],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 1, index |-> 2]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 1
+/\ DmlLog = [ d1 |-> <<>>,
+  d2 |->
+      << [metadata |-> [term |-> 1, index |-> 1], data |-> 0],
+         [metadata |-> [term |-> 1, index |-> 2], data |-> 0] >> ]
+/\ ActivatedNode = "d1"
+/\ Term = [d1 |-> 1, d2 |-> 1, e1 |-> 1]
+/\ Role = [d1 |-> "follower", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "e1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 2], data |-> 0]], [term |-> 1, destination |-> "d2", source |-> "d1", rpc_type |-> "AppendEntries RF2 Resp", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logged_idx |-> [term |-> 0, index |-> 0], ok |-> FALSE]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "d2"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 12: <FollowerSendSwitchToRF1Leader line 934, col 3 to line 952, col 50 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 1, index |-> 1],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 1, index |-> 2]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 1
+/\ DmlLog = [ d1 |-> <<>>,
+  d2 |->
+      << [metadata |-> [term |-> 1, index |-> 1], data |-> 0],
+         [metadata |-> [term |-> 1, index |-> 2], data |-> 0] >> ]
+/\ ActivatedNode = "d1"
+/\ Term = [d1 |-> 1, d2 |-> 1, e1 |-> 1]
+/\ Role = [d1 |-> "candidate", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "e1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 2], data |-> 0]], [term |-> 1, destination |-> "d2", source |-> "d1", rpc_type |-> "AppendEntries RF2 Resp", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logged_idx |-> [term |-> 0, index |-> 0], ok |-> FALSE], [term |-> 1, destination |-> "e1", source |-> "d1", rpc_type |-> "SwitchToRF1Leader", committed_idx |-> [term |-> 0, index |-> 0], RF |-> 2, logged_idx |-> [term |-> 0, index |-> 0]]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "d2"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 2]
+
+State 13: <ElectorAckSwitchToRF1Leader line 955, col 3 to line 1001, col 90 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 1, index |-> 1],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 1, index |-> 2]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 1
+/\ DmlLog = [ d1 |-> <<>>,
+  d2 |->
+      << [metadata |-> [term |-> 1, index |-> 1], data |-> 0],
+         [metadata |-> [term |-> 1, index |-> 2], data |-> 0] >> ]
+/\ ActivatedNode = "e1"
+/\ Term = [d1 |-> 1, d2 |-> 1, e1 |-> 2]
+/\ Role = [d1 |-> "candidate", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "e1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 2], data |-> 0]], [term |-> 1, destination |-> "d2", source |-> "d1", rpc_type |-> "AppendEntries RF2 Resp", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logged_idx |-> [term |-> 0, index |-> 0], ok |-> FALSE], [term |-> 2, destination |-> "d1", source |-> "e1", rpc_type |-> "SwitchToRF1Leader Resp", committed_idx |-> [term |-> 0, index |-> 0], RF |-> 1, ok |-> TRUE]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d2", d2 |-> "d2", e1 |-> "d1"]
+/\ ReplicationFactor = [d1 |-> 2, d2 |-> 2, e1 |-> 1]
+
+State 14: <CandidateProcessSwitchToRF1Leader_OK line 1004, col 3 to line 1034, col 88 of module JanusMc>
+/\ CommittedIdx = [ d1 |-> [term |-> 0, index |-> 0],
+  d2 |-> [term |-> 1, index |-> 1],
+  e1 |-> [term |-> 0, index |-> 0] ]
+/\ LoggedIdx = [d1 |-> [term |-> 0, index |-> 0], d2 |-> [term |-> 1, index |-> 2]]
+/\ Nodes = {"d1", "d2", "e1"}
+/\ NumFailures = 1
+/\ DmlLog = [ d1 |-> <<>>,
+  d2 |->
+      << [metadata |-> [term |-> 1, index |-> 1], data |-> 0],
+         [metadata |-> [term |-> 1, index |-> 2], data |-> 0] >> ]
+/\ ActivatedNode = "d1"
+/\ Term = [d1 |-> 2, d2 |-> 1, e1 |-> 2]
+/\ Role = [d1 |-> "leader", d2 |-> "leader", e1 |-> "elector"]
+/\ Messages = <<[term |-> 1, destination |-> "e1", source |-> "d2", rpc_type |-> "AppendEntries RF2", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logentry |-> [metadata |-> [term |-> 1, index |-> 2], data |-> 0]], [term |-> 1, destination |-> "d2", source |-> "d1", rpc_type |-> "AppendEntries RF2 Resp", committed_idx |-> [term |-> 1, index |-> 1], RF |-> 2, logged_idx |-> [term |-> 0, index |-> 0], ok |-> FALSE]>>
+/\ Restarted = [d1 |-> FALSE, d2 |-> FALSE, e1 |-> FALSE]
+/\ CurrentLeader = [d1 |-> "d1", d2 |-> "d2", e1 |-> "d1"]
+/\ ReplicationFactor = [d1 |-> 1, d2 |-> 2, e1 |-> 1]
+
+606970112 states generated, 231341533 distinct states found, 199718727 states left on queue.
+The depth of the complete state graph search is 15.
+The average outdegree of the complete state graph is 7 (minimum is 0, the maximum 16 and the 95th percentile is 11).
+Checkpointing of run states/25-09-11-00-03-11
+Checkpointing completed at (2025-09-11 01:13:20)
+Finished in 01h 10min at (2025-09-11 01:13:20)
