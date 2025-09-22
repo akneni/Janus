@@ -4,12 +4,12 @@ EXTENDS Integers, FiniteSets, Sequences
 (***************************************************************************)
 (* Constants                                                               *)
 (***************************************************************************)
-CONSTANT MaxTerm, MaxIndex, DataNodes, ElectorNodes
+CONSTANT MaxTerm, MaxIndex, Nodes
 
 (***************************************************************************)
 (* Node universe (built from constants; safe for use in type operators)    *)
 (***************************************************************************)
-NodeSet == DataNodes \cup ElectorNodes
+NodeSet == Nodes
 
 (***************************************************************************)
 (* Variables                                                               *)
@@ -22,8 +22,10 @@ VARIABLES
   Role,              \* [NodeSet   -> {"leader","candidate","follower","elector"}]
   Nodes,             \* runtime alias of NodeSet
   NumFailures,       \* Nat, at most 2
+  
   ConsensusVec,      \* How the leader keeps track of which AppendEntries Reqests have consensuss
   CurrMembershipData \* A dict of what each node thinks the membershp is (elector node is not included here)
+  
   CurrentLeader,     \* [NodeSet -> DataNodes \cup {"unknown","none"}]
   DmlLog,            \* [DataNodes -> Seq(LogEntry)]
   Messages           \* Seq(AllMsgs)
@@ -36,7 +38,7 @@ LogEntryMd == [ term: 0..MaxTerm, index: 0..MaxIndex ]
 
 LogEntry ==
   [ metadata: LogEntryMd,
-    data     : {0,1} ]
+    data     : {0,1,"change membership"} ]
 
 LastMd(s) ==
   IF Len(s) = 0 THEN [term |-> 0, index |-> 0] ELSE s[Len(s)].metadata
@@ -118,7 +120,7 @@ Ae == [
   committed_idx: LogEntryMd,
   logentry     : LogEntry
 ]
-AeRf1Resp == [
+AeResp == [
   source       : NodeSet,
   destination  : NodeSet,
   rpc_type     : {"AppendEntries Resp"},
@@ -164,8 +166,8 @@ ChangeMem == [
   destination  : NodeSet,
   rpc_type     : {"Change Membership"},
   term         : 0..MaxTerm,
-  logged_idx   : LogEntryMd,
-  NewMembership: Seq(DataNodes)
+  NewMembership: Seq(DataNodes),
+  logentry     : LogEntry
 ]
 ChangeMemResp == [
   source       : NodeSet,
@@ -176,10 +178,8 @@ ChangeMemResp == [
 ]
 
 AllMsgs ==
-  AeRf1 \cup AeRf1Resp \cup AeRf2 \cup AeRf2Resp \cup
-  StRf1 \cup StRf1Resp \cup StRf1L \cup StRf1LResp \cup
-  StRf2P1 \cup StRf2P1Resp \cup StRf2P2 \cup 
-  InitWorkload \cup InitWorkloadResp
+  Ae \cup AeResp \cup AeRf1 \cup AeRf1Resp \cup
+  ReqVote \cup ReqVoteResp \cup ChangeMem \cup ChangeMemResp
 
 (***************************************************************************)
 (* Invariants / Properties                                                 *)
@@ -189,10 +189,12 @@ TypeOk ==
   /\ CommittedIdx \in [Nodes -> LogEntryMd]
   /\ Term \in [NodeSet -> 0..MaxTerm]
   /\ Role \in [NodeSet -> {"leader","candidate","follower","elector"}]
-  /\ \A n \in DataNodes : Role[n] \in {"leader","candidate","follower"}
-  /\ \A n \in ElectorNodes : Role[n] \in {"elector"}
-  /\ NumFailures \in Nat /\ NumFailures <= 1
-  /\ ReplicationFactor \in [NodeSet -> {1,2}]
+
+  /\ ConsensusVec \in [NodeSet -> Nat]
+  /\ CurrMembershipData \in [NodeSet -> Seq(DataNodes)]
+
+  /\ NextStep \in [NodeSet -> {"Ae"}]
+
   /\ CurrentLeader \in [NodeSet -> DataNodes \cup {"unknown","none"}]
   /\ DmlLog \in [DataNodes -> Seq(LogEntry)]
   /\ Messages \in Seq(AllMsgs)

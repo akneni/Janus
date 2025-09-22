@@ -1,9 +1,26 @@
-## Terminology
-*Receiver-first semantics*: This is when the sender of the RPC that would update the term sends out the RPC without changing their own term, and the receiver of the RPC updates their term upon receiving this message. The sender will update their term once they receive the ACK from the receiver. This avoids the unnecessary term update (and and resulting failovers) if this RPC fails (since the term only gets incremented on a success). However, this is safe to use iff there is a single receiver to this term-update RPC. 
+# Overview
+- This is a protocol that can use 2 full nodes to tolerate 1 failure or 3 full nodes to tolerate 2 (non-simultaneous) failures. 
+
+## Cluster States
+The entire cluster can be in one of three states (defined by the membership from the viewpoint of the leader with the highest term). 
+1) Stable State (RF3): Elector is not part of the membership yet; 3 nodes act as classic raft. 
+2) Tentative State (RF2): One follower is assumed to be down, and we've added the elector to the cluster. The leader still needs an ACK from the follower and the elector to commit something. 
+3) Solo State (RF3): The other follower has failed, so the leader does two membership changes to remove both of the other nodes from the cluster. Now, the leader only needs an ACK from the elector to commit a log entry. 
+
+Note that the bullet points above only discuss the followers failing. If a leader fails, the cluster just does a leader election, and the new leader proceeds as is described above. 
+
+
+## Append Entries
+This doesn't change: the leader just needs an ACK from the majority of followers/electors. 
+
+## Leader Election
+This doesn't change: the candidate just needs an ACK from the majority of followers/electors. 
 
 ## Change Membership
-This RPC has two main jobs (other than merely changing the membership for operational reasons)
-1) If two data nodes are down, then we need to change the membership to the surviving data node and the elector. 
-2) When we detect that the data nodes have gotten back up, we want to change the membership back to the full cluster. 
+- This spec only models single server membership changes. 
+- Note that a membership change is modeled as a special Append Entries RPC.
+- Since it's a special version of the Append Entires request, only leaders can send this RPC. If a follower wants to do a membership change, it will have to do a leader election and then one a membership change.
 
-In scenario 1 above, it would be best (implementation wise) to use *receiver-first semantics* to update the term. However, for the sake of understandability of the spec, I am going to use sender-first semantics for the entire algorithm. 
+## What If?
+What if a follower/elector receives a membership change request? 
+- It will ignore the membership change request and process the vote request (so it treats the membership change just like an append entries). 

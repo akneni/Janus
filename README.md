@@ -1,7 +1,10 @@
 ![Banner](.assets/janus-banner.png)
 
 # Overview
-Janus is a practical consensus algorithm inspired by Raft. Unlike Raft, Janus only requires two of three nodes to maintain a full log and underlying database/application state; the third node acts as an arbiter in elections, holds < 100 bytes of state, and does not need to be send log entries during append entries requests. 
+Janus is a practical consensus algorithm inspired by Raft. Unlike Raft, Janus can tolerate 2 failures with only 3 full nodes (nodes that maintain a raft log and the underlying database/application state); the fourth node acts as an arbiter in elections, holds < 100 bytes of state, and does not need to be send log entries during append entries requests. 
+
+Note: this protocol can tolerate the failure of any one node or the failure of 2 data nodes. A failure of a data node and the elector will cause a loss of availability (not not a loss of consistency). Since the elector only maintains < 100 bytes of state, the assumption is that a failed elector can be replaced with a new one almost immediately. 
+
 
 # Why Janus?
 Janus requires 1/3 less hardware and 1/2 less bandwidth than other common consensus protocols such as Raft and Paxos. 
